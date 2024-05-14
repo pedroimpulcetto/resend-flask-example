@@ -9,15 +9,15 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    params = {
-        "from": "onboarding@resend.dev",
-        "to": "delivered@resend.dev",
+    params: resend.Emails.SendParams = {
+        "sender": "Acme <onboarding@resend.dev>",
+        "to": ["delivered@resend.dev"],
         "subject": "hello world",
         "html": "<strong>it works!</strong>",
     }
 
-    r = resend.Emails.send(params)
-    return jsonify(r)
+    r: resend.Email = resend.Emails.send(params)
+    return jsonify(r.__dict__)
 
 
 if __name__ == "__main__":
